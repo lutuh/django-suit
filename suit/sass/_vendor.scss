@@ -10,7 +10,6 @@
 @import "../../bower_components/bootstrap/scss/mixins";
 
 // Reset and dependencies
-@import "../../bower_components/bootstrap/scss/normalize";
 @import "../../bower_components/bootstrap/scss/print";
 
 // Core CSS
@@ -24,7 +23,6 @@
 @import "../../bower_components/bootstrap/scss/buttons";
 
 // Components
-@import "../../bower_components/bootstrap/scss/animation";
 @import "../../bower_components/bootstrap/scss/dropdown";
 @import "../../bower_components/bootstrap/scss/button-group";
 @import "../../bower_components/bootstrap/scss/input-group";
@@ -34,14 +32,13 @@
 @import "../../bower_components/bootstrap/scss/card";
 //@import "../../bower_components/bootstrap/scss/breadcrumb";
 //@import "../../bower_components/bootstrap/scss/pagination";
-@import "../../bower_components/bootstrap/scss/tags";
 //@import "../../bower_components/bootstrap/scss/jumbotron";
 @import "../../bower_components/bootstrap/scss/alert";
 @import "../../bower_components/bootstrap/scss/progress";
 //@import "../../bower_components/bootstrap/scss/media";
 //@import "../../bower_components/bootstrap/scss/list-group";
-@import "../../bower_components/bootstrap/scss/responsive-embed";
 @import "../../bower_components/bootstrap/scss/close";
+@import "../../bower_components/bootstrap/scss/badge";
 
 // Components w/ JavaScript
 @import "../../bower_components/bootstrap/scss/modal";
