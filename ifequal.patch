@@ -1,0 +1,69 @@
+diff --git a/suit/templates/admin/cms/page/change_form.html b/suit/templates/admin/cms/page/change_form.html
+index 107f1cc..8afe0f1 100644
+--- a/suit/templates/admin/cms/page/change_form.html
++++ b/suit/templates/admin/cms/page/change_form.html
+@@ -121,7 +121,7 @@
+     {% if show_language_tabs %}
+       <ul class="nav nav-tabs nav-tabs-suit" data-tab-prefix="tab-content">
+         {% for lang_code, lang_name in language_tabs %}
+-        <li class="{% ifequal lang_code language %}active{% else %}{% if not lang_code in filled_languages %} notfilled{% endif %}{% endifequal %}"><a href="javascript:;" onclick="trigger_lang_button(this,'./?language={{lang_code}}');">{{lang_name}}</a></li>
++        <li class="{% if lang_code == language %}active{% else %}{% if not lang_code in filled_languages %} notfilled{% endif %}{% endif %}"><a href="javascript:;" onclick="trigger_lang_button(this,'./?language={{lang_code}}');">{{lang_name}}</a></li>
+         {% endfor %}
+       </ul>
+     {% endif %}
+diff --git a/suit/templates/admin/cms/page/change_list.html b/suit/templates/admin/cms/page/change_list.html
+index 48b0332..105e3f0 100644
+--- a/suit/templates/admin/cms/page/change_list.html
++++ b/suit/templates/admin/cms/page/change_list.html
+@@ -124,7 +124,7 @@
+ {% if cl.has_access_to_multiple_sites %}
+ 	<div id="site-selector">{% trans "Pages on:" %}
+ 		<select id="site-select">{% for site in cl.sites %}
+-			<option {% ifequal site.pk cl.current_site.pk %}selected {% endifequal %}value="{{ site.pk }}">{{ site.name }}</option>{% endfor %}
++			<option {% if site.pk == cl.current_site.pk %}selected {% endif %}value="{{ site.pk }}">{{ site.name }}</option>{% endfor %}
+ 		</select>
+ 	</div>
+ {% else %}
+diff --git a/suit/templates/admin/filer/folder/directory_table.html b/suit/templates/admin/filer/folder/directory_table.html
+index 49cc66e..8cbcce1 100644
+--- a/suit/templates/admin/filer/folder/directory_table.html
++++ b/suit/templates/admin/filer/folder/directory_table.html
+@@ -42,7 +42,7 @@
+                     <a style="display: block; float: right;margin-left: 10px;" class="deletelink text-error" href="{% url 'admin:filer_file_delete' file.pk %}{% if is_popup %}?_popup=1{% if select_folder %}&select_folder=1{% endif %}{% endif %}" title="{% blocktrans with file.label as item_label %}Delete '{{ item_label }}'{% endblocktrans %}">{% trans "Delete" %}</a>
+                     <a style="display: block; float: right;" class="changelink" href="{{ file.get_admin_url_path }}{% if is_popup %}?_popup=1{% if select_folder %}&select_folder=1{% endif %}{% endif %}" title="{% blocktrans with file.label as item_label %}Change '{{ item_label }}' details{% endblocktrans %}">{% trans "Change" %}</a>
+                     <div><b><a href="{{ file.get_admin_url_path }}{% if is_popup %}?_popup=1{% if select_folder %}&select_folder=1{% endif %}{% endif %}" title="{% blocktrans with file.label as item_label %}Change '{{ item_label }}' details{% endblocktrans %}">{{ file.label }}</a></b></div>
+-                    <div class="file-info muted"><span class="file-size">{{ file.size|filesizeformat }}{% ifequal file.file_type "Image" %}, {{ file.width }}x{{ file.height }} px{% endifequal %}</span><br>{% trans "Owner" %}: {{ file.owner|default:"n/a" }}{% if enable_permissions %}. {% trans "Permissions" %}: {% if file.is_public %}{% trans "disabled" %}{% else %}{% trans "enabled" %}{% endif %}{% endif %}</div>
++                    <div class="file-info muted"><span class="file-size">{{ file.size|filesizeformat }}{% if file.file_type == "Image" %}, {{ file.width }}x{{ file.height }} px{% endif %}</span><br>{% trans "Owner" %}: {{ file.owner|default:"n/a" }}{% if enable_permissions %}. {% trans "Permissions" %}: {% if file.is_public %}{% trans "disabled" %}{% else %}{% trans "enabled" %}{% endif %}{% endif %}</div>
+                     {# {% if file.has_all_mandatory_data %}<div><img alt="0" src="{% admin_icon_base %}img/admin/icon-yes.gif" /> {% trans "has all mandatory metadata" %}</div>{% else %}<div><img alt="1" src="{% admin_icon_base %}img/admin/icon-no.gif"/> {% trans "missing metadata!" %}</div>{% endif %} #}
+                 </td>
+                 <td style="text-align: right;">
+@@ -51,12 +51,12 @@
+             </tr>
+             {% endwith %}{% endif %}
+         {% endfor %}
+-        {% if not folder.is_root %}{% ifequal folder.item_count 0 %}
++        {% if not folder.is_root %}{% if folder.item_count == 0 %}
+         <tr class="{% cycle rowcolors %}">
+                 <!-- FileIcon -->
+                 <td colspan="5" class="row1" style="text-align: center;vertical-align: middle;height:128px;color: gray;">{% trans "there are no files or subfolders" %}</td>
+             </tr>
+-        {% endifequal %}{% endif %}
++        {% endif %}{% endif %}
+         </tbody>
+     </table>
+     <div class="pagination-block">
+diff --git a/suit/templates/admin/pagination.html b/suit/templates/admin/pagination.html
+index a928d14..d964024 100644
+--- a/suit/templates/admin/pagination.html
++++ b/suit/templates/admin/pagination.html
+@@ -20,8 +20,8 @@
+     {% paginator_info cl %}
+     &nbsp; / &nbsp;
+     {{ cl.result_count }}
+-    {% ifequal cl.result_count 1 %}{{ cl.opts.verbose_name }}{% else %}
+-      {{ cl.opts.verbose_name_plural }}{% endifequal %}
++    {% if cl.result_count == 1 %}{{ cl.opts.verbose_name }}{% else %}
++      {{ cl.opts.verbose_name_plural }}{% endif %}
+     {% if show_all_url %}&nbsp;&nbsp;
+       <a href="{{ show_all_url }}" class="showall">{% trans 'Show all' %}</a>{% endif %}
+   </div>
